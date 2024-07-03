@@ -7,11 +7,9 @@ pipeline {
                 git branch: 'main', url: "https://github.com/bachlex03/Jenkins-exp.git"
             }
         }
-        stage("Build") {
-            steps {
-                sh "docker build -t baledev/jenkins-exp ."
-                sh "docker push baledev/jenkins-exp"
-            }
+        withDockerRegistry(credentialsId: 'jenkins-dockerhub', url: 'https://index.docker.io/v1/') {
+            sh "docker build -t baledev/jenkins-exp ."
+            sh "docker push baledev/jenkins-exp"
         }
     }
 }
