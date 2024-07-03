@@ -1,6 +1,6 @@
 pipeline {
     agent { label 'linux' }
-    evironment {
+    environment {
         DOCKERHUB_CREDENTIALS = credentials('docker-hub-env')
     }
     stages {
@@ -10,8 +10,6 @@ pipeline {
                 git branch: 'main', url: "https://github.com/bachlex03/Jenkins-exp.git"
             }
         }
-    }
-    stages {
         stage("Build") {
             steps {
                 sh "docker build -t baledev/jenkins-exp ."
