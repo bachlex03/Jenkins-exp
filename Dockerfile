@@ -1,6 +1,13 @@
-FROM nginx:1.17.1-alpine
+FROM jenkins/jenkins:lts
+USER root
 
-COPY nginx.conf /etc/nginx/nginx.conf
-COPY index.html /usr/share/nginx/html
+# Install required packages
+RUN apt-get update -qq \
+    && apt-get install -qqy apt-transport-https ca-certificates curl gnupg2 software-properties-common
 
-EXPOSE 80
+# Install Docker using Docker's official script
+RUN curl -fsSL https://get.docker.com -o get-docker.sh \
+    && sh get-docker.sh
+
+# Add Jenkins user to the docker group
+RUN usermod -aG docker jenkins
