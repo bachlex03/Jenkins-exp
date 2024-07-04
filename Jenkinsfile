@@ -11,6 +11,7 @@ pipeline {
         stage ("Build") {
             steps {
                 withDockerRegistry(credentialsId: 'jenkins-dockerhub', url: 'https://index.docker.io/v1/') {
+                    sh "docker --version"
                     sh "docker build -t baledev/jenkins-exp ."
                     sh "docker push baledev/jenkins-exp"
                 }
