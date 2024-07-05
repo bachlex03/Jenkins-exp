@@ -10,4 +10,4 @@ USER root
 #     && sh get-docker.sh
 
 # Add Jenkins user to the docker group
-RUN usermod -aG docker jenkins
+# RUN usermod -aG docker jenkins
