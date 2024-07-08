@@ -19,6 +19,10 @@ pipeline {
         stage ("Deploy to DEV environment") {
             steps {
                 echo "Deploying to DEV environment"
+                sh "docker network create dev || echo 'Network already exists'"
+                sh "docker container stop jenkins-exp-dockerhub || echo 'No container running'"
+                sh "echo y | docker container prune"
+                
                 sh "docker image pull baledev/jenkins-exp"
                 sh "docker container run -d --name jenkins-exp-dockerhub -p 8081:8080 baledev/jenkins-exp"
             }

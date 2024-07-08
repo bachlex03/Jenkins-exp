@@ -1,5 +1,11 @@
-FROM jenkins/jenkins:lts
-USER root
+FROM node:20.11.1-alpine3.19 as dev
+
+WORKDIR /usr/src/app
+
+COPY . .
+
+USER node
+
 
 # # Install required packages
 # RUN apt-get update -qq \
