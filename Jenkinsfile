@@ -9,7 +9,7 @@ pipeline {
         }
         stage ("Packaging and pushing the Image") {
             steps {
-                withDockerRegistry(credentialsId: 'jenkins-docker', url: 'https://index.docker.io/v1/') {
+                withDockerRegistry(credentialsId: 'jenkins-dockerhub-2', url: 'https://index.docker.io/v1/') {
                     sh "docker --version"
                     sh "docker build -t baledev/jenkins-exp ."
                     sh "docker push baledev/jenkins-exp"
