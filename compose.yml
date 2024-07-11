@@ -1,37 +1,37 @@
-version: "3.7"
-name: springboot-mysql-compose
+# version: "3.7"
+# name: springboot-mysql-compose
 
-services:
-  app:
-    container_name: khalid-springboot
-    build:
-      context: .
-      dockerfile: ./Dockerfile2
-    image: baledev/docker-compose
-    ports:
-      - "8082:8080"
-    # restart: on-failure
-    depends_on:
-      mysql:
-        condition: service_healthy
-    networks:
-      - java-app
+# services:
+#   app:
+#     container_name: khalid-springboot
+#     build:
+#       context: .
+#       dockerfile: ./Dockerfile2
+#     image: baledev/docker-compose
+#     ports:
+#       - "8082:8080"
+#     # restart: on-failure
+#     depends_on:
+#       mysql:
+#         condition: service_healthy
+#     networks:
+#       - java-app
 
-  mysql:
-    container_name: khalid-java-mysql
-    image: "mysql:8.0"
-    environment:
-      MYSQL_ROOT_PASSWORD: password123_DONG
-      MYSQL_DATABASE: db_example
-      MYSQL_USER: khalid
-      MYSQL_PASSWORD: password123_DONG
-    volumes:
-      - khalid-java-mysql-data:/var/lib/mysql
-    networks:
-      - java-app
+#   mysql:
+#     container_name: khalid-java-mysql
+#     image: "mysql:8.0"
+#     environment:
+#       MYSQL_ROOT_PASSWORD: password123_DONG
+#       MYSQL_DATABASE: db_example
+#       MYSQL_USER: khalid
+#       MYSQL_PASSWORD: password123_DONG
+#     volumes:
+#       - khalid-java-mysql-data:/var/lib/mysql
+#     networks:
+#       - java-app
 
-volumes:
-  khalid-java-mysql-data:
-networks:
-  java-app:
-    name: java-app
+# volumes:
+#   khalid-java-mysql-data:
+# networks:
+#   java-app:
+#     name: java-app

@@ -1,19 +1,27 @@
-FROM node:20.11.1-alpine3.19 as dev
+FROM jenkins/jenkins:lts
 
-WORKDIR /usr/src/app
+USER root
 
-COPY . .
+RUN apt-get update -qq \
+    && apt-get install -qqy apt-transport-https ca-certificates curl gnupg2 software-properties-common
 
-USER node
+# Add Docker's official GPG key
+RUN curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 
+# Setup Docker repository
+RUN echo \
+"deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian \
+$(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+tee /etc/apt/sources.list.d/docker.list > /dev/null
 
-# # Install required packages
-# RUN apt-get update -qq \
-#     && apt-get install -qqy apt-transport-https ca-certificates curl gnupg2 software-properties-common
+# Update package index
+RUN apt-get update
 
-# # Install Docker using Docker's official script
-# RUN curl -fsSL https://get.docker.com -o get-docker.sh \
-#     && sh get-docker.sh
+# Install Docker CE
+RUN apt-get install -y docker-ce
 
-# Add Jenkins user to the docker group
-# RUN usermod -aG docker jenkins
+# Check if docker group exists, create if not
+RUN grep -q docker /etc/group || groupadd docker
+
+# Add jenkins user to docker group
+RUN usermod -aG docker jenkins
